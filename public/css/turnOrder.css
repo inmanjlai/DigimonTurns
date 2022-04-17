@@ -1,0 +1,128 @@
+.turn-order-list {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.turn-order-list-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    gap: 35px;
+}
+
+.image-container {
+    width: 350px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.image-container button {
+    padding: 15px 20px;
+    font-size: 24px;
+    border: none;
+    background-color: white;
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s;
+}
+
+.image-container button:active {
+    box-shadow: none;
+    transform: translateY(5px);
+}
+
+.image-container button:last-child {
+    padding: 15px 14px;
+}
+
+.turn-order-list-container img {
+    height: 50px;
+    width: auto;
+    
+}
+
+.single-user-turn-object {
+    display: flex;
+    flex-direction: column;
+    width: 350px;
+    padding: 10px;
+    position: relative;
+    color: white;
+}
+
+.false {
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+.current_player {
+    border: 5px solid white;
+    box-shadow: 0 0 10px #fff;
+}
+
+.last_player {
+    border: 5px solid red;
+    box-shadow: 0 0 10px red;
+}
+
+
+.order {
+    position: absolute;
+    right: 10px;
+    top: auto;
+    opacity: 0.4;
+    font-size: 34px;
+    border: 2px solid white;
+    background-color: white;
+    padding: 10px;
+}
+
+.current_player > .order {
+    opacity: 1;
+}
+
+.exhaust {
+    font-size: 16px;
+    padding: 10px;
+}
+
+.attack-image {
+    display: none;
+}
+
+.show-image {
+    display: block;
+    position: relative;
+    right: 75px;
+    bottom: 23px;
+    height: 30px;
+}
+
+.show-image img {
+    /* filter: invert(15%) sepia(97%) saturate(7204%) hue-rotate(360deg) brightness(101%) contrast(108%); */
+    filter: invert(97%) sepia(0%) saturate(0%) hue-rotate(42deg) brightness(103%) contrast(105%);
+}
+
+.user-stats {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.reset-game {
+    background-color: white;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    transition: transform 0.2s;
+}
+
+.reset-game:active {
+    transform: translateY(5px);
+    box-shadow: none;
+}
