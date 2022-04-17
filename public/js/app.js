@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // ADD CREATE GAME FUNCTION TO SUBMIT BUTTON PASSING IN USERS ->
     document.querySelector(".create-game button").addEventListener("click", (e) => {
         const userInputs = document.querySelectorAll(".create-game input[type='text']");
+        document.querySelector(".turn-order-list-container").style.visibility='visible'
         
         // CREATE THE USER OBJECTS AND APPEND THEM TO THE USERS ARRAY
         const users = [];
@@ -24,6 +25,15 @@ document.addEventListener("DOMContentLoaded", () => {
         document.querySelector(".create-game").style.display = "none";
         displayTurnOrder(turnOrder);
 
+    })
+
+    document.querySelector(".legend-info").addEventListener('click', () => {
+        const legendScreen = document.querySelector('.legend-container');
+        legendScreen.classList.add("legend-container-shown")
+
+        document.querySelector(".close-legend").addEventListener('click', () => {
+            legendScreen.classList.remove("legend-container-shown")
+        })
     })
 
 })

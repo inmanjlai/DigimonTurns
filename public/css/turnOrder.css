@@ -11,8 +11,10 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 100%;
-    gap: 40px;
+    /* height: 100%; */
+    gap: 20px;
+    visibility: hidden;
+    overflow-y: scroll;
 }
 
 .image-container {
@@ -58,7 +60,7 @@
     padding: 10px;
     position: relative;
     color: white;
-    height: 94px;
+    height: 80px;
     justify-content: center;
 }
 
@@ -82,7 +84,7 @@
     right: 10px;
     top: auto;
     opacity: 0.4;
-    font-size: 34px;
+    font-size: 30px;
     border: 2px solid white;
     background-color: white;
     padding: 10px;
@@ -119,6 +121,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    font-size: 14px;
 }
 
 .reset-game {
@@ -126,7 +129,7 @@
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
     padding: 10px 20px;
     transition: transform 0.2s;
-    font-size: 24px;
+    /* font-size: 24px; */
     border-radius: 25px;
 }
 
