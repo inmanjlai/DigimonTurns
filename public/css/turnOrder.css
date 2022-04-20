@@ -13,7 +13,7 @@
     align-items: center;
     height: 100%;
     gap: 20px;
-    visibility: hidden;
+    display: none;
     /* overflow-y: scroll; */
 }
 
@@ -88,6 +88,7 @@
     border: 2px solid white;
     background-color: white;
     padding: 10px;
+    display: none;
 }
 
 .current_player > .order {
@@ -107,7 +108,6 @@
 .show-image {
     display: block;
     position: relative;
-    right: 75px;
     bottom: 23px;
     height: 30px;
 }
@@ -136,4 +136,16 @@
 .reset-game:active {
     transform: translateY(5px);
     box-shadow: none;
+}
+
+.dont_show_eliminate {
+    display: none;
+}
+
+.show_eliminate {
+    display: block;
+    filter: invert();
+    position: relative;
+    bottom: 23px;
+    height: 30px;
 }

@@ -1,4 +1,6 @@
 let currentTurnOrder;
+let originalTurnOrder;
+console.log(currentTurnOrder, originalTurnOrder)
 
 const buttons = document.querySelectorAll(".image-container button");
 buttons.forEach((button) => {
@@ -50,6 +52,13 @@ function sortByExhaust(user1, user2) {
 
 function reset(){
     const users = [];
+    currentTurnOrder = originalTurnOrder;
+
+    const turnOrderListContainer = document.querySelector(".turn-order-list-container");
+    turnOrderListContainer.style.display = "flex";
+    const endGame = document.querySelector(".end-game");
+    endGame.style.visibility = "hidden";
+
     currentTurnOrder.forEach((user) => {
         users.push({
             name: user.name,
@@ -69,26 +78,45 @@ function generateFirstTurn(users) {
     const turnOrder = shuffle(users)
     
     turnOrder[0].current_player = true;
+    turnOrder[0].number_of_turns += 1;
     turnOrder[1].next_player = true;
     
+    // IF THIS IS A SHALLOW COPY: WHEN RUNNING REMOVE PLAYER, THE ORIGINAL TURN ORDER WILL BE AFFECTED AS WELL
+    originalTurnOrder = [...turnOrder];
     return turnOrder
 }
-// WILL SORT THE USERS BY EXHAUST AND TOTAL EXHAUST BUT NEEDS TO RANDOMIZE OTHERS
 function generateNextTurn(users) {    
     console.log("GENERATING NEXT TURN...")
     const currentUser = users.filter(user => user.current_player === true)[0]
     const sortedUsers = users.sort(sortByExhaust)
     const newSortedUsers = sortedUsers.filter(user => user.current_player === false)
     newSortedUsers.unshift(currentUser)
-    newSortedUsers[1].next_player = true
-    currentTurnOrder = newSortedUsers;
+    
+    currentTurnOrder = [...newSortedUsers];
+    console.log(currentTurnOrder)
+    
 
     displayTurnOrder(currentTurnOrder)
 }
 
-// WORKS FINE
+function generateNextTurnReturn(users) {    
+    console.log("GENERATING NEXT TURN RETURN...")
+    const currentUser = users.filter(user => user.current_player === true)[0]
+    const sortedUsers = users.sort(sortByExhaust)
+    const newSortedUsers = sortedUsers.filter(user => user.current_player === false)
+    newSortedUsers.unshift(currentUser)
+    
+    currentTurnOrder = [...newSortedUsers];
+
+    return currentTurnOrder;
+}
+
 function displayTurnOrder(turnOrder) {
     if(!currentTurnOrder) currentTurnOrder = turnOrder;
+
+    if(currentTurnOrder.length === 1) {
+        displayEndGame(currentTurnOrder[0])
+    }
 
     const turnOrderList = document.querySelector(".turn-order-list");
     turnOrderList.innerHTML = ""        
@@ -98,6 +126,7 @@ function displayTurnOrder(turnOrder) {
         const currentPlayer = user.current_player ? "current_player" : false
         const showImage = (user.next_player || user.last_player) ? "show-image" : false
         const lastPlayer = user.last_player ? "last_player" : false
+        const notCurrentPlayer = !user.current_player ? 'show_eliminate' : 'dont_show_eliminate'
 
         turnOrderList.innerHTML += `
             <div class="single-user-turn-object ${currentPlayer} ${lastPlayer}" style="background-color:${user.color}">
@@ -110,6 +139,9 @@ function displayTurnOrder(turnOrder) {
                     <div class='attack-image ${showImage}'>
                         <img src='/images/attack.svg' alt='attack'>
                     </div>
+                    <div class='eliminate-player ${notCurrentPlayer}' onclick="removePlayer(${idx})">
+                        <img src='/images/remove.svg' alt='eliminate'>
+                    </div>
                 </div>
                 <h2 class='order' style="color:${user.color}">0${idx + 1}</h2>
             </div>
@@ -118,7 +150,6 @@ function displayTurnOrder(turnOrder) {
 
 }
 
-// !!!!!!! HAS A BUG WHERE THE CURRENT PLAYER WILL STOP BEING HIGHLIGHTED AFTER A COUPLE LOOPS !!!!!!!
 function goNext(value){
     // TAKE IN USER INPUT FOR EXHAUST 
     const numberChosen = +value
@@ -152,8 +183,17 @@ function goNext(value){
     // SET THE PLAYER AFTER CURRENT USERS 'CURRENT_PLAYER' TAG TO TRUE
     if(currentTurnOrder[idx + 1]){
         currentTurnOrder[idx + 1].current_player = true;
+        currentTurnOrder[idx + 1].number_of_turns += 1;
         currentTurnOrder[idx + 1].next_player = false;
-    }
+    } 
+    // else {
+    //     currentTurnOrder = generateNextTurnReturn(currentTurnOrder)
+    //     console.log(currentTurnOrder);
+    //     currentTurnOrder[1].next_player = true
+    //     currentTurnOrder[0].current_player = true;
+    //     currentTurnOrder[0].number_of_turns += 1;
+    //     currentTurnOrder[0].next_player = false;
+    // }
 
     if(currentTurnOrder[idx + 2]) {
         currentTurnOrder[idx + 2].next_player = true
@@ -173,4 +213,38 @@ function goNext(value){
 
      displayTurnOrder(currentTurnOrder)
 
+}
+
+function removePlayer(idx){
+
+    console.log(originalTurnOrder);
+
+    if(currentTurnOrder[idx]){
+        const user = currentTurnOrder[idx];
+
+        if(!user.current_player){
+            currentTurnOrder.splice(idx, 1);
+            displayTurnOrder(currentTurnOrder);
+        } else {
+            alert("You cannot eliminate the turn player");
+        }
+
+    }
+    
+    console.log(originalTurnOrder);
+
+}
+
+function displayEndGame(user) {
+    const turnOrderListContainer = document.querySelector(".turn-order-list-container");
+    turnOrderListContainer.style.display = "none";
+    const endGame = document.querySelector(".end-game");
+    endGame.style.visibility = "visible";
+
+    endGame.innerHTML = `
+        <div>
+            <p>${user.name} won the game!</p>
+        </div>
+        <button onclick="reset()">Play Again</button>
+    `
 }

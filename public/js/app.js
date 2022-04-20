@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // ADD CREATE GAME FUNCTION TO SUBMIT BUTTON PASSING IN USERS ->
     document.querySelector(".create-game button").addEventListener("click", (e) => {
         const userInputs = document.querySelectorAll(".create-game input[type='text']");
-        document.querySelector(".turn-order-list-container").style.visibility='visible'
+        document.querySelector(".turn-order-list-container").style.display='flex'
         
         // CREATE THE USER OBJECTS AND APPEND THEM TO THE USERS ARRAY
         const users = [];
@@ -16,7 +16,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 color: input.dataset.color,
                 current_player: false,
                 last_player: false,
-                next_player: false
+                next_player: false,
+                number_of_turns: 0,
+                average_exhaust: 0
             })
         })
         // GENERATE THE INITIAL TURN ORDER RANDOMLY -> 
